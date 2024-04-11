@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { FaCheck } from "react-icons/fa6";
 import { HiChevronUpDown } from "react-icons/hi2";
+import useSignup from "../hooks/useSignup";
 
 const type = [
   { name: "Student" },
@@ -21,13 +22,12 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const handleSubmit = (evt) => {
+  const { loading, signup } = useSignup();
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-
-    const apiData = { ...formData, userType: selected.name };
-
-    console.table(apiData);
-    alert(`submitted form ${selected.name}`);
+    const inputData = { ...formData, userType: selected.name };
+    await signup(inputData);
   };
 
   return (
@@ -63,7 +63,7 @@ const Signup = () => {
             Email:
           </label>
           <input
-            type="email"
+            type="text"
             name="email"
             value={formData.email}
             onChange={(evt) =>

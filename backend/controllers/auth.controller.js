@@ -26,11 +26,20 @@ export const registerController = async (req, res) => {
     }
 
     if (!validator.isEmail(email)) {
-      return response(res, 400, false, "lease enter a valid email");
+      return response(res, 400, false, "Please enter a valid email");
     }
 
     if (!password) {
       return response(res, 400, false, "Password is required");
+    }
+
+    if (password.length < 6) {
+      return response(
+        res,
+        400,
+        false,
+        "Password should contain atleast 6 characters"
+      );
     }
 
     if (!confirmPassword) {

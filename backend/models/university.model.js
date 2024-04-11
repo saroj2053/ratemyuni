@@ -24,7 +24,7 @@ const universitySchema = new mongoose.Schema(
       enum: [
         "National University",
         "Provincial University",
-        "Autonomous institute",
+        "Autonomous Institute",
       ],
     },
     description: {

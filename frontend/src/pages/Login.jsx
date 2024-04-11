@@ -53,7 +53,10 @@ const Login = () => {
             className="border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
           />
         </div>
-        <button className="border-0 outline-none bg-primary-dark text-white font-xl tracking-widest capitalize font-semibold px-10 py-2 rounded-md">
+        <button
+          disabled={loading}
+          className="border-0 outline-none bg-primary-dark text-white font-sm tracking-widest capitalize font-semibold px-8 py-1 rounded-md"
+        >
           {loading ? "logging in..." : "login"}
         </button>
       </form>

@@ -2,14 +2,15 @@ import React from "react";
 import logo from "../../assets/logo.svg";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import useUserContext from "../../context/UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
-  const user = false;
+  const { user } = useUserContext();
   return (
     <header className="bg-white border-2 border-b-grey-light-2 font-grotesk w-full">
       <div className="max-w-[90%] mx-auto py-6 flex justify-between items-center">
-        <div className="flex gap-1 items-center w-[30%]">
+        <div className="flex gap-1 items-center w-[50%] md:w-[30%]">
           <img
             src={logo}
             className="w-14 h-14 "
@@ -18,7 +19,7 @@ const Header = () => {
           <h1 className="text-2xl font-bold text-slate-700">Rate My Uni</h1>
         </div>
 
-        <div className="relative w-[35%]">
+        <div className="relative w-[35%] hidden md:block">
           <form action="#">
             <input
               className="bg-grey-light-2 py-3 pl-8 pr-16 rounded-full w-full focus:outline-none font-grotesk"
@@ -39,11 +40,7 @@ const Header = () => {
           {user ? (
             <ul>
               <li className="cursor-pointer">
-                <img
-                  className="w-14 h-14"
-                  src="https://avatar.iran.liara.run/username?username=Neha+Sanon"
-                  alt=""
-                />
+                <img className="w-14 h-14" src={user.profileAvatar} alt="" />
               </li>
             </ul>
           ) : (
