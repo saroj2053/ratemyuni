@@ -47,12 +47,18 @@ const Header = () => {
               </li>
             </ul>
           ) : (
-            <ul className="flex gap-8 justify-between items-center">
+            <ul className="flex gap-10 justify-between items-center">
               <li
-                className="text-base font-semibold py-2 px-4 rounded-full cursor-pointer bg-primary-dark text-white transition ease-in delay-100 hover:bg-default-primary hover:text-white"
+                className="text-base font-semibold text-grey-dark-1 cursor-pointer hover:text-primary-dark"
                 onClick={() => navigate("/login")}
               >
-                Login/Signup
+                Login
+              </li>
+              <li
+                className="text-base font-semibold py-2 px-4 rounded-md cursor-pointer border-2 border-primary-dark text-grey-dark-1 transition ease-in delay-100 hover:bg-primary-dark hover:text-white"
+                onClick={() => navigate("/signup")}
+              >
+                Get Started
               </li>
             </ul>
           )}

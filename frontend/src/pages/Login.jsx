@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
+import useLogin from "../hooks/useLogin";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (evt) => {
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    alert(`Form is submitted with ${email} and ${password} `);
+    await login(email, password);
   };
   return (
     <div className="max-w-[70%] md:max-w-[60%] lg:max-w-[50%] mx-auto my-12  ">
@@ -50,8 +53,8 @@ const Login = () => {
             className="border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
           />
         </div>
-        <button className="border-0 outline-none bg-primary-dark text-white font-xl tracking-widest uppercase font-semibold px-10 py-2 rounded-md">
-          Login
+        <button className="border-0 outline-none bg-primary-dark text-white font-xl tracking-widest capitalize font-semibold px-10 py-2 rounded-md">
+          {loading ? "logging in..." : "login"}
         </button>
       </form>
 

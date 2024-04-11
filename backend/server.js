@@ -12,9 +12,9 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use("/auth", authRoutes);
-app.use("/university", universityRoutes);
-app.use("/review", reviewRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/university", universityRoutes);
+app.use("/api/review", reviewRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello from rate my uni </h1>");

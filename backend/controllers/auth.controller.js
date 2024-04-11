@@ -107,12 +107,12 @@ export const loginController = async (req, res) => {
     if (!password) {
       return response(res, 400, false, "Password is required");
     }
-    if (!password.length >= 6) {
+    if (password.length < 6) {
       return response(
         res,
         400,
         false,
-        "Password should contain atleast six characters"
+        "Password should contain atleast 6 characters"
       );
     }
     const user = await User.findOne({ email: email });

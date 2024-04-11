@@ -4,6 +4,8 @@ import Home from "./pages/Home.jsx";
 import AddUniversity from "./pages/AddUniversity.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
           <Route path="/addUniversity" element={<AddUniversity />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }
