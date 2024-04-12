@@ -14,7 +14,7 @@ const universitySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    establishedDate: {
+    establishedYear: {
       type: String,
       required: true,
     },

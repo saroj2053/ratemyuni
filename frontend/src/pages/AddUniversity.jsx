@@ -3,6 +3,7 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { FaCheck } from "react-icons/fa6";
 import { HiChevronUpDown } from "react-icons/hi2";
+import useCreateUniversity from "../hooks/useCreateUniversity";
 
 const category = [
   { name: "National University" },
@@ -11,13 +12,39 @@ const category = [
 ];
 
 const AddUniversity = () => {
+  const [inputs, setInputs] = useState({
+    name: "",
+    location: "",
+    establishedYear: "",
+    description: "",
+    websiteUrl: "",
+  });
   const [selected, setSelected] = useState(category[0]);
+  const [logo, setLogo] = useState();
+
+  const { loading, createUniversity } = useCreateUniversity();
+
+  const handleLogoChange = (evt) => {
+    setLogo(evt.target.files[0]);
+  };
+
+  const universityHandler = async (evt) => {
+    evt.preventDefault();
+    console.log(logo);
+    const data = { ...inputs, category: selected.name };
+    console.log(inputs);
+    const formData = new FormData();
+    formData.append("logo", logo);
+
+    await createUniversity(formData, data);
+  };
+
   return (
     <div className="max-w-[70%] md:max-w-[60%] lg:max-w-[50%] mx-auto my-12  ">
       <h2 className="text-3xl font-semibold text-center text-slate-700">
         Add University
       </h2>
-      <form action="#">
+      <form onSubmit={universityHandler} encType="multipart/form-data">
         <div className="flex flex-col gap-2 my-6">
           <label htmlFor="name" className="font-semibold text-slate-700">
             University Name:
@@ -25,6 +52,8 @@ const AddUniversity = () => {
           <input
             type="text"
             name="name"
+            value={inputs.name}
+            onChange={(evt) => setInputs({ ...inputs, name: evt.target.value })}
             placeholder="University name"
             className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
           />
@@ -35,17 +64,13 @@ const AddUniversity = () => {
           </label>
           <input
             type="file"
+            accept="image/*"
             name="logo"
+            onChange={handleLogoChange}
             className="block text-grey-dark-1 border-2 p-2 rounded-md  bg-gray-50  focus:border-2 focus:outline-none focus:border-grey-dark-3"
             aria-describedby="logo_input_help"
             id="logo_input"
           />
-          <p
-            class="mt-1 text-sm text-gray-500 dark:text-gray-300"
-            id="logo_input_help"
-          >
-            SVG, PNG, JPG or GIF (MAX. 800x400px).
-          </p>
         </div>
 
         <div className="flex flex-col gap-2 my-6">
@@ -55,6 +80,10 @@ const AddUniversity = () => {
           <input
             type="text"
             name="location"
+            value={inputs.location}
+            onChange={(evt) =>
+              setInputs({ ...inputs, location: evt.target.value })
+            }
             placeholder="Location"
             className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
           />
@@ -66,7 +95,26 @@ const AddUniversity = () => {
           <input
             type="text"
             name="estYear"
+            value={inputs.establishedYear}
+            onChange={(evt) =>
+              setInputs({ ...inputs, establishedYear: evt.target.value })
+            }
             placeholder="Year of establishment"
+            className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
+          />
+        </div>
+        <div className="flex flex-col gap-2 my-6">
+          <label htmlFor="webUrl" className=" font-semibold text-slate-700">
+            Website Url:
+          </label>
+          <input
+            type="text"
+            name="webUrl"
+            value={inputs.websiteUrl}
+            onChange={(evt) =>
+              setInputs({ ...inputs, websiteUrl: evt.target.value })
+            }
+            placeholder="website url"
             className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
           />
         </div>
@@ -137,14 +185,22 @@ const AddUniversity = () => {
           <textarea
             rows="4"
             type="text"
+            value={inputs.description}
+            onChange={(evt) =>
+              setInputs({ ...inputs, description: evt.target.value })
+            }
             name="description"
             placeholder="About University"
             className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3"
           />
         </div>
 
-        <button className=" flex gap-2 justify-between items-center border-2 border-primary-dark text-slate-700 font-semibold px-6 py-2 outline-none rounded-md transition duration-300 ease-in hover:bg-primary-dark hover:text-white">
-          Save Data
+        <button
+          className=" flex gap-2 justify-between items-center border-2 border-primary-dark text-slate-700 font-semibold px-6 py-2 outline-none rounded-md transition duration-300 ease-in hover:bg-primary-dark hover:text-white"
+          onClick={universityHandler}
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save Data"}
         </button>
       </form>
     </div>

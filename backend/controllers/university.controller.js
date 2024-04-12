@@ -51,19 +51,18 @@ export const addUniversity = async (req, res) => {
   try {
     const {
       name,
-      logo,
       location,
-      establishedDate,
+      establishedYear,
       category,
       description,
       websiteUrl,
+      logo,
     } = req.body;
 
     if (
       !name ||
-      !logo ||
       !location ||
-      !establishedDate ||
+      !establishedYear ||
       !category ||
       !description ||
       !websiteUrl
@@ -71,11 +70,15 @@ export const addUniversity = async (req, res) => {
       return response(res, 400, false, "Please enter values in all fields");
     }
 
+    if (!logo) {
+      return response(res, 400, false, "Please upload a logo");
+    }
+
     const newUniversity = new University({
       name,
       logo,
       location,
-      establishedDate,
+      establishedYear,
       category,
       description,
       websiteUrl,
