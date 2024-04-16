@@ -5,6 +5,7 @@ import {
   addUniversity,
   deleteUniversity,
   updateUniversity,
+  searchUniversity,
 } from "../controllers/university.controller.js";
 
 const router = express.Router();
@@ -14,6 +15,8 @@ router.get("/", getUniversities);
 router.get("/:id", getSingleUniversity);
 
 router.post("/", addUniversity);
+
+router.post("/search/:query", searchUniversity);
 
 router.put("/update/:id", updateUniversity);
 

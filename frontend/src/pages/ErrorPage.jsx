@@ -14,7 +14,7 @@ const ErrorPage = () => {
 
       <button
         type="button"
-        className=" border-2 border-default-primary px-6 py-2 rounded-md  text-slate-800 hover:bg-default-primary hover:text-white"
+        className=" border-2 border-slate-600 px-6 py-2 rounded-md  text-slate-600 hover:bg-slate-700 hover:text-white"
         onClick={() => navigate(-1)}
       >
         Go Back

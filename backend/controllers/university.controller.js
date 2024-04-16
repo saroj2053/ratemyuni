@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 export const getUniversities = async (req, res) => {
   try {
-    const universities = await University.find({});
+    const universities = await University.find({}).populate("reviews");
 
     if (universities.length === 0) {
       return response(res, 404, false, "Universities data not found");
@@ -23,24 +23,21 @@ export const getUniversities = async (req, res) => {
 
 export const getSingleUniversity = async (req, res) => {
   try {
-    const universityId = req.params.id;
+    const university = await University.findById(req.params.id).populate(
+      "reviews"
+    );
 
-    const university = await University.findById(universityId);
+    console.log(university);
 
     if (!university) {
-      return response(
-        res,
-        404,
-        false,
-        "No university exists with the given id"
-      );
+      return response(res, 404, false, "University not found");
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "University details fetched successfully",
+        university,
+      });
     }
-
-    res.status(200).json({
-      success: true,
-      message: "Single university retrieved successfully",
-      university: university,
-    });
   } catch (error) {
     console.log(`Error in getSingleUniversity controller ${error.message}`);
     response(res, 500, false, "Internal Server Error");
@@ -169,5 +166,36 @@ export const deleteUniversity = async (req, res) => {
   } catch (error) {
     console.log("Error in deleteUniversity controller", error.message);
     response(res, 500, false, "Internal server error");
+  }
+};
+
+export const searchUniversity = async (req, res) => {
+  try {
+    const requestedUniversity = req.params.query;
+
+    if (!requestedUniversity) {
+      return response(res, 400, false, "Error retrieving url parameters");
+    }
+    const includesArithmeticSymbols = /[+\-*/%\#^]/.test(requestedUniversity);
+    if (includesArithmeticSymbols) {
+      return response(
+        res,
+        400,
+        false,
+        "Invalid search term. It includes arithmetic symbols."
+      );
+    }
+
+    const foundUniversities = await University.find({
+      name: { $regex: new RegExp(requestedUniversity, "i") },
+    });
+
+    res.status(200).json({
+      success: true,
+      universities: foundUniversities,
+    });
+  } catch (error) {
+    console.log("Error in searchUniversity controller", error.message);
+    response(res, 500, false, "Internal Server Error");
   }
 };

@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import * as url from "url";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
@@ -9,12 +10,21 @@ import uploadRoutes from "./routes/fileUpload.route.js";
 import connectDB from "./db/db.js";
 dotenv.config();
 
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+console.log(__dirname);
+
 const app = express();
 
 // middlewares
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// serving static files
+app.use(express.static(path.join(__dirname, "uploads")));
+app.use("/static", express.static(path.join(__dirname, "uploads")));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/university", universityRoutes);
 app.use("/api/review", reviewRoutes);

@@ -35,7 +35,9 @@ const Signup = () => {
       <div className="w-24 mx-auto">
         <img className="w-24 h-24" src={logo} alt="" />
       </div>
-      <h2 className="text-3xl font-semibold text-center">Signup</h2>
+      <h2 className="text-3xl font-semibold text-slate-700 text-center">
+        Signup
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2 my-6">
           <label
@@ -169,7 +171,7 @@ const Signup = () => {
             className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3 "
           />
         </div>
-        <button className="border-0 outline-none bg-primary-dark text-white font-xl tracking-widest uppercase font-semibold px-10 py-2 rounded-md">
+        <button className="border-0 outline-none bg-slate-800 text-white font-xl tracking-widest uppercase font-semibold px-8 py-2 rounded-md hover:bg-slate-600">
           Signup
         </button>
       </form>
@@ -177,7 +179,7 @@ const Signup = () => {
       <p className="text-slate-700 font-xl font-semibold text-center my-6 ">
         Already have an account ?{" "}
         <span
-          className="underline cursor-pointer hover:text-default-primary uppercase tracking-wide"
+          className="cursor-pointer hover:text-slate-500 hover:underline uppercase tracking-wide"
           onClick={() => navigate("/login")}
         >
           Login

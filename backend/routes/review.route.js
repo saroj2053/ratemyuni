@@ -1,8 +1,9 @@
 import express from "express";
-import { getReviews } from "../controllers/review.controller.js";
+import { getReviews, addReview } from "../controllers/review.controller.js";
 
 const router = express.Router();
 
 router.get("/", getReviews);
+router.post("/", addReview);
 
 export default router;

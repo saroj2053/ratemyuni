@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ const Login = () => {
       <div className="w-24 mx-auto">
         <img className="w-24 h-24" src={logo} alt="" />
       </div>
-      <h2 className="text-3xl font-semibold text-center">Login</h2>
+      <h2 className="text-3xl font-semibold text-slate-700 text-center ">
+        Login
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2 my-6">
           <label
@@ -55,16 +58,16 @@ const Login = () => {
         </div>
         <button
           disabled={loading}
-          className="border-0 outline-none bg-primary-dark text-white font-sm tracking-widest capitalize font-semibold px-8 py-1 rounded-md"
+          className="border-2 outline-none border-slate-800 text-slate-800 font-xl tracking-widest uppercase font-semibold px-8 py-2 rounded-md hover:bg-slate-800 hover:text-white disabled:bg-slate-600"
         >
-          {loading ? "logging in..." : "login"}
+          {loading ? "login..." : "login"}
         </button>
       </form>
 
       <p className="text-slate-700 font-xl font-semibold text-center my-4">
         Don't have an account ?{" "}
         <span
-          className="underline cursor-pointer hover:text-default-primary uppercase tracking-wide"
+          className="cursor-pointer hover:text-slate-500 hover:underline uppercase tracking-wide"
           onClick={() => navigate("/signup")}
         >
           Signup

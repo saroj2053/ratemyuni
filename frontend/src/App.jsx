@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useUserContext from "./context/UserContext.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import UniversityDetails from "./pages/UniversityDetails.jsx";
 
 function App() {
   const { user } = useUserContext();
@@ -25,6 +26,11 @@ function App() {
             element={user ? <Navigate to="/" /> : <Signup />}
           />
           <Route path="/addUniversity" element={<AddUniversity />} />
+          <Route
+            path="/university/:name"
+            exact
+            element={<UniversityDetails />}
+          />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
