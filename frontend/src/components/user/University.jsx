@@ -4,6 +4,8 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { slugify } from "../../utils/slugify";
 import AppLayout from "./AppLayout";
+import { calculateAverageRating } from "../../utils/calculateAverageRating";
+import { getRatingColor } from "../../utils/ratingBgColor";
 
 const University = ({ university }) => {
   const navigate = useNavigate();
@@ -21,9 +23,7 @@ const University = ({ university }) => {
     });
   };
 
-  const averageRating =
-    university.reviews?.reduce((sum, review) => sum + review.rating, 0) /
-    university.reviews?.length;
+  const averageRating = calculateAverageRating(university?.reviews);
 
   return (
     <>
@@ -51,7 +51,11 @@ const University = ({ university }) => {
 
         <div className="flex justify-between items-center my-4">
           {university.reviews?.length > 0 ? (
-            <div className="w-16 h-16 rounded-full text-white bg-slate-800 flex justify-center items-center">
+            <div
+              className={`w-16 h-16 rounded-full text-white ${getRatingColor(
+                averageRating
+              )} flex justify-center items-center`}
+            >
               <p>{averageRating} &#9733;</p>
             </div>
           ) : (

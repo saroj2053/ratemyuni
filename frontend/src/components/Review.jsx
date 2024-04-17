@@ -1,12 +1,17 @@
 import React from "react";
 import { extractDate } from "../utils/extractDate";
+import { getRatingColor } from "../utils/ratingBgColor";
 
 const Review = ({ review }) => {
   return (
     <>
       <div className="flex flex-col">
         <div className="flex gap-4 items-center">
-          <div className="bg-green-400 w-14 h-14 rounded-full text-white font-semibold text-center flex justify-center items-center">
+          <div
+            className={` ${getRatingColor(
+              review.rating
+            )} w-14 h-14 rounded-full text-white font-semibold text-center flex justify-center items-center`}
+          >
             {review.rating}&#9733;
           </div>
           <h2 className="text-md font-bold text-slate-600">

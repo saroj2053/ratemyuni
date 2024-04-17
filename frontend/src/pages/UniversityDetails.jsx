@@ -98,15 +98,6 @@ const UniversityDetails = () => {
         </div>
         <div className="flex justify-between flex-wrap items-center py-4 w-full">
           <div className="w-[100%] xl:w-[40%]">
-            {/* <div className="w-full flex justify-between items-center">
-              <div className="text-lg text-slate-600 font-semibold my-4">
-                University Name:
-              </div>
-              <h2 className="bg-slate-600 text-white text-base px-4  rounded-full">
-                {university.name}
-              </h2>
-            </div> */}
-
             <div className="w-full flex justify-between items-center">
               <div className="text-lg text-slate-600 font-semibold my-4">
                 Year of Establishment:
