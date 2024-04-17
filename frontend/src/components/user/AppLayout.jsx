@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import Sidebar from "../admin/Sidebar";
 
 const AppLayout = ({ children, onSearch }) => {
   return (

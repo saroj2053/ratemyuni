@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { slugify } from "../../utils/slugify";
-import AppLayout from "./AppLayout";
+import { getRatingColor } from "../../utils/ratingBgColor";
+import { calculateAverageRating } from "../../utils/calculateAverageRating";
 
 const University = ({ university }) => {
   const navigate = useNavigate();
@@ -17,19 +18,16 @@ const University = ({ university }) => {
 
   const universityClickHandler = () => {
     navigate(`/university/${slugifiedUniversityName}`, {
-      state: { university: university },
+      state: { id: university._id },
     });
   };
 
-  const averageRating =
-    university.reviews?.reduce((sum, review) => sum + review.rating, 0) /
-    university.reviews?.length;
-
+  const averageRating = calculateAverageRating(university?.reviews);
   return (
     <>
       <div
         key={university._id}
-        className="flex flex-col justify-between w-[90%] lg:w-[45%] xl:w-[30%] h-[450px] mx-auto border-2 border-slate-100 p-6 my-6 rounded-md shadow-sm transition-all delay-50 ease-in-out cursor-pointer hover:scale-105"
+        className="flex flex-col justify-between w-[90%] lg:w-[45%] xl:w-[30%] h-[400px] mx-auto border-2 border-slate-100 p-6 my-6 rounded-md shadow-sm transition-all delay-50 ease-in-out cursor-pointer hover:scale-105"
         onClick={universityClickHandler}
       >
         <div>
@@ -38,7 +36,7 @@ const University = ({ university }) => {
             src={logoUri}
             alt="uni logo"
           />
-          <h1 className="text-2xl text-slate-700 font-semibold my-4">
+          <h1 className="text-xl text-slate-700 font-semibold my-4">
             {university.name || <Skeleton />}
           </h1>
           <p className="mt-4 text-sm text-slate-600">
@@ -51,7 +49,11 @@ const University = ({ university }) => {
 
         <div className="flex justify-between items-center my-4">
           {university.reviews?.length > 0 ? (
-            <div className="w-16 h-16 rounded-full text-white bg-slate-800 flex justify-center items-center">
+            <div
+              className={`w-16 h-16 rounded-full text-white ${getRatingColor(
+                averageRating
+              )} flex justify-center items-center`}
+            >
               <p>{averageRating} &#9733;</p>
             </div>
           ) : (

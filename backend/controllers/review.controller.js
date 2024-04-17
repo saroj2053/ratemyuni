@@ -4,7 +4,7 @@ import response from "../utils/generateResponse.js";
 
 export const getReviews = async (req, res) => {
   try {
-    const reviews = Review.find({});
+    const reviews = await Review.find({});
     if (!reviews) {
       return response(res, 404, false, "Sorry, No reviews found");
     } else {

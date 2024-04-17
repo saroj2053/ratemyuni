@@ -27,15 +27,28 @@ export const getSingleUniversity = async (req, res) => {
       "reviews"
     );
 
-    console.log(university);
-
     if (!university) {
       return response(res, 404, false, "University not found");
     } else {
+      const address = university.location;
+
+      // Perform geocode API call
+      const geocodeResponse = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          address
+        )}`
+      );
+
+      const geocodeData = await geocodeResponse.json();
+
+      const { lat, lon } = geocodeData[0];
+
+      const geocode = { latitude: lat, longitude: lon };
       res.status(200).json({
         success: true,
         message: "University details fetched successfully",
         university,
+        geocode,
       });
     }
   } catch (error) {
