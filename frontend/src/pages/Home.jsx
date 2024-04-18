@@ -25,8 +25,6 @@ const Home = () => {
       setUniversities(universitiesData);
     }
   }, [searchTerm]);
-  console.log(searchTerm);
-  console.log(universities);
 
   return (
     <div>

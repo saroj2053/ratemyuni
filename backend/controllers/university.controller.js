@@ -32,10 +32,36 @@ export const getSingleUniversity = async (req, res) => {
     if (!university) {
       return response(res, 404, false, "University not found");
     } else {
+      const address = university.location;
+
+      const geocodeResponse = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          address
+        )}`
+      );
+
+      if (!geocodeResponse.ok) {
+        return response(res, 400, false, "Error geocoding location");
+      }
+      const geocodeData = await geocodeResponse.json();
+      if (geocodeData.length === 0) {
+        return response(
+          res,
+          400,
+          false,
+          `No geocode value found for ${address}`
+        );
+      }
+
+      const { lat, lon } = geocodeData[0];
+
+      const geocode = { latitude: lat, longitude: lon };
+
       res.status(200).json({
         success: true,
         message: "University details fetched successfully",
         university,
+        geocode,
       });
     }
   } catch (error) {

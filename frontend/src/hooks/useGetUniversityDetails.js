@@ -1,17 +1,20 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const useGetUniversities = () => {
+const useGetUniversityDetails = () => {
   const [loading, setLoading] = useState(false);
 
-  const getUniversities = async () => {
+  const getUniversityDetails = async (uniID) => {
     setLoading(true);
-
     try {
-      const response = await fetch("/api/university/");
+      const response = await fetch(`/api/university/${uniID}`);
+
       const data = await response.json();
-      return data.universities;
+
+      if (data.success === false) {
+        throw new Error(data.message);
+      }
+      return data;
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -19,7 +22,8 @@ const useGetUniversities = () => {
       setLoading(false);
     }
   };
-  return { loading, getUniversities };
+
+  return { loading, getUniversityDetails };
 };
 
-export default useGetUniversities;
+export default useGetUniversityDetails;

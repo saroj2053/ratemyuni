@@ -12,7 +12,7 @@ const Review = ({ review }) => {
               review.rating
             )} w-14 h-14 rounded-full text-white font-semibold text-center flex justify-center items-center`}
           >
-            {review.rating}&#9733;
+            {review.rating} &#9733;
           </div>
           <h2 className="text-md font-bold text-slate-600">
             {extractDate(review.createdAt)}

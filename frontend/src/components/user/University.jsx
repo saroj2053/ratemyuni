@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { slugify } from "../../utils/slugify";
-import AppLayout from "./AppLayout";
 import { calculateAverageRating } from "../../utils/calculateAverageRating";
 import { getRatingColor } from "../../utils/ratingBgColor";
 
@@ -19,7 +18,7 @@ const University = ({ university }) => {
 
   const universityClickHandler = () => {
     navigate(`/university/${slugifiedUniversityName}`, {
-      state: { university: university },
+      state: { universityId: university._id },
     });
   };
 

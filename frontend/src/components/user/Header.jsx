@@ -35,8 +35,9 @@ const Header = ({ onSearch }) => {
         <div className="flex gap-1 items-center w-[40%] md:w-[30%]">
           <img
             src={logo}
-            className="w-14 h-14 "
+            className="w-14 h-14 cursor-pointer "
             alt="star within multiple circles"
+            onClick={() => navigate("/")}
           />
           <h1 className="text-lg font-bold text-slate-700">Rate My Uni</h1>
         </div>
