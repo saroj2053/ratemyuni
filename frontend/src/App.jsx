@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useUserContext from "./context/UserContext.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import UniversityDetails from "./pages/UniversityDetails.jsx";
+import SearchedUniversity from "./pages/SearchedUniversity.jsx";
 
 function App() {
   const { user } = useUserContext();
@@ -31,6 +32,7 @@ function App() {
             exact
             element={<UniversityDetails />}
           />
+          <Route path="/search" element={<SearchedUniversity />} />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

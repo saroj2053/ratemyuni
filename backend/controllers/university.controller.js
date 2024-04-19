@@ -197,28 +197,20 @@ export const deleteUniversity = async (req, res) => {
 
 export const searchUniversity = async (req, res) => {
   try {
-    const requestedUniversity = req.params.query;
+    const requestedQuery = req.query.q;
+    const regex = new RegExp(requestedQuery, "i", "g");
 
-    if (!requestedUniversity) {
-      return response(res, 400, false, "Error retrieving url parameters");
-    }
-    const includesArithmeticSymbols = /[+\-*/%\#^]/.test(requestedUniversity);
-    if (includesArithmeticSymbols) {
-      return response(
-        res,
-        400,
-        false,
-        "Invalid search term. It includes arithmetic symbols."
-      );
-    }
-
-    const foundUniversities = await University.find({
-      name: { $regex: new RegExp(requestedUniversity, "i") },
-    });
+    const university = await University.find({
+      $or: [
+        {
+          name: regex,
+        },
+      ],
+    }).populate("reviews");
 
     res.status(200).json({
       success: true,
-      universities: foundUniversities,
+      university: university,
     });
   } catch (error) {
     console.log("Error in searchUniversity controller", error.message);

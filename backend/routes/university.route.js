@@ -16,7 +16,7 @@ router.get("/:id", getSingleUniversity);
 
 router.post("/", addUniversity);
 
-router.post("/search/:query", searchUniversity);
+router.post("/search", searchUniversity);
 
 router.put("/update/:id", updateUniversity);
 

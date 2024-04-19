@@ -7,28 +7,18 @@ import AppLayout from "../components/user/AppLayout";
 const Home = () => {
   const { loading, getUniversities } = useGetUniversities();
   const [universities, setUniversities] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = (data, term) => {
-    setUniversities(data);
-    setSearchTerm(term);
-  };
 
   useEffect(() => {
-    if (searchTerm.length === 0 && universities.length === 0) {
-      fetchUniversities();
-    } else {
-      return;
-    }
     async function fetchUniversities() {
       const universitiesData = await getUniversities();
       setUniversities(universitiesData);
     }
-  }, [searchTerm]);
+    fetchUniversities();
+  }, []);
 
   return (
     <div>
-      <AppLayout onSearch={handleSearch}>
+      <AppLayout>
         <div>
           {loading ? (
             <Loader title="Universities" />

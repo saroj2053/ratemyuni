@@ -10,7 +10,12 @@ const useGetUniversities = () => {
 
     try {
       const response = await fetch("/api/university/");
+
       const data = await response.json();
+
+      if (data.success === false) {
+        throw new Error(data.message);
+      }
       return data.universities;
     } catch (error) {
       console.log(error);

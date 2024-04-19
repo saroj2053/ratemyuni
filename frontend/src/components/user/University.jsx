@@ -22,7 +22,7 @@ const University = ({ university }) => {
     });
   };
 
-  const averageRating = calculateAverageRating(university?.reviews);
+  const averageRating = calculateAverageRating(university.reviews);
 
   return (
     <>

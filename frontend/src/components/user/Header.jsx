@@ -4,31 +4,30 @@ import { FaSearch } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import useUserContext from "../../context/UserContext";
 import useLogout from "../../hooks/useLogout";
-import useSearchUniversity from "../../hooks/useSearchUniversity";
-import Home from "../../pages/Home";
 
-const Header = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useUserContext();
   const { loading, logout } = useLogout();
-  const { searchUniversity } = useSearchUniversity();
 
-  const handleSearch = async (evt) => {
-    evt.preventDefault();
+  const searchInput = useLocation();
+  const URLSearch = new URLSearchParams(searchInput?.search);
+  const searchQuery = URLSearch.getAll("q");
+  const [search, setSearch] = useState(searchQuery);
 
-    //removing unnecessary characters from query string
-    const newSearchTerm = searchTerm.replace(/[+\-*/%^]/g, "");
-    if (newSearchTerm.length > 0) {
-      const data = await searchUniversity(newSearchTerm);
-      onSearch(data, newSearchTerm);
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+
+    if (value) {
+      navigate(`/search?q=${value}`);
     } else {
-      onSearch([], "");
+      navigate("/");
     }
   };
 
-  const shouldRenderSearchForm = location.pathname === "/";
+  const shouldNotRenderSearchForm = location.pathname.startsWith("/university");
   return (
     <header className="bg-white border-2 border-b-grey-light-2 font-grotesk w-full">
       <div className="max-w-[90%] mx-auto py-6 flex flex-wrap justify-between items-center">
@@ -42,25 +41,20 @@ const Header = ({ onSearch }) => {
           <h1 className="text-lg font-bold text-slate-700">Rate My Uni</h1>
         </div>
 
-        {shouldRenderSearchForm && (
+        {!shouldNotRenderSearchForm && (
           <div className="relative w-[30%] hidden lg:block">
-            <form onSubmit={handleSearch}>
-              <input
-                className="bg-grey-light-2 py-3 pl-8 pr-16 rounded-full w-full focus:outline-none font-grotesk"
-                type="text"
-                value={searchTerm}
-                onChange={(evt) => setSearchTerm(evt.target.value)}
-                name="search_university"
-                placeholder="Search university"
-              />
-              <button
-                type="submit"
-                className="absolute top-4 right-6 text-xl text-grey-dark-2"
-                onClick={handleSearch}
-              >
-                <FaSearch />
-              </button>
-            </form>
+            <input
+              className="bg-grey-light-2 py-3 pl-8 pr-16 rounded-full w-full focus:outline-none font-grotesk"
+              type="text"
+              onChange={handleSearch}
+              value={search}
+              name="search_university"
+              placeholder="Search university"
+              onFocus={() => navigate("/search")}
+            />
+            <div className="absolute top-4 right-6 text-xl text-grey-dark-2">
+              <FaSearch />
+            </div>
           </div>
         )}
 

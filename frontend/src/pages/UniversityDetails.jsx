@@ -109,7 +109,7 @@ const UniversityDetails = () => {
               <div className="w-full my-6 text-justify text-slate-600">
                 {university.description}
               </div>
-              <div className="flex justify-between flex-wrap items-center py-4 w-full">
+              <div className="flex justify-between flex-wrap items-center gap-6 py-4 w-full">
                 <div className="w-[100%] xl:w-[40%] flex flex-col gap-10 bg-slate-100 p-4 rounded-lg">
                   <div className="w-full flex justify-start items-center">
                     <div className="text-lg text-slate-600 font-semibold my-4">
