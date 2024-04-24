@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useUserContext from "../context/UserContext";
+import toast from "react-hot-toast";
 
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,7 @@ const useLogout = () => {
 
       localStorage.removeItem("user");
       setUser(null);
+      toast.success(data.message);
     } catch (error) {
       console.log(error.message);
     } finally {

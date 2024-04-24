@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const useCreateReview = () => {
   const [loading, setLoading] = useState(false);
 
   const createReview = async (inputs) => {
     const { user, university, rating, review } = inputs;
-    console.log(inputs);
     setLoading(true);
     try {
       const response = await fetch("/api/review", {
@@ -20,15 +19,14 @@ const useCreateReview = () => {
         }),
       });
 
-      console.log(response);
       const data = await response.json();
 
       if (data.success === false) {
         throw new Error(data.message);
+      } else {
+        toast.success(data.message);
+        return data.review;
       }
-
-      toast.success(data.message);
-      return data.review;
     } catch (error) {
       console.log(error);
       toast.error(error.message);

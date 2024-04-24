@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import useUserContext from "../context/UserContext";
 
 const useSignup = () => {
@@ -32,7 +32,7 @@ const useSignup = () => {
       if (data.success === false) {
         throw new Error(data.message);
       }
-
+      toast.success(data.message);
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
     } catch (error) {

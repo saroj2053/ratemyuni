@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useUserContext from "../context/UserContext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -16,11 +16,15 @@ const useLogin = () => {
       });
 
       const data = await response.json();
-      console.log(data);
+
       if (data.success === false) {
         throw new Error(data.message);
       }
+
+      toast.success(data.message);
+
       localStorage.setItem("user", JSON.stringify(data.user));
+
       setUser(data.user);
     } catch (error) {
       toast.error(error.message);

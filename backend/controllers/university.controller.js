@@ -27,8 +27,6 @@ export const getSingleUniversity = async (req, res) => {
       "reviews"
     );
 
-    console.log(university);
-
     if (!university) {
       return response(res, 404, false, "University not found");
     } else {

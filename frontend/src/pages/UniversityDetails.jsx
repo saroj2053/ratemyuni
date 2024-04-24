@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppLayout from "../components/user/AppLayout";
 import { useLocation } from "react-router-dom";
-import useGeocodeAddress from "../hooks/useGeocodeAddress";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useUserContext from "../context/UserContext";
 import Modal from "../components/Modal";
@@ -11,6 +10,8 @@ import Review from "../components/Review";
 import { calculateAverageRating } from "../utils/calculateAverageRating";
 import useGetUniversityDetails from "../hooks/useGetUniversityDetails";
 import Loader from "../components/Loader";
+
+import { Toaster } from "react-hot-toast";
 
 const UniversityDetails = () => {
   const location = useLocation();
@@ -39,24 +40,44 @@ const UniversityDetails = () => {
   });
   const handleModalOpen = () => {
     setIsModalOpen(true);
+    document.body.style.overflow = "hidden";
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    document.body.style.overflow = "auto";
   };
 
   const handleAddReview = async (evt) => {
     evt.preventDefault();
     const newReview = await createReview(inputs);
-    console.log(newReview);
-    setReviews([...reviews, newReview]);
-    setInputs({
-      user: user?._id,
-      university: universityId,
-      rating: 1,
-      review: "",
-    });
-    setIsModalOpen(false);
+    if (newReview !== undefined) {
+      setReviews([...reviews, newReview]);
+      setInputs({
+        user: user?._id,
+        university: universityId,
+        rating: 1,
+        review: "",
+      });
+      setIsModalOpen(false);
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  const handleReviewDeletion = (deletedReviewId) => {
+    const updatedReviews = reviews.filter(
+      (review) => review._id !== deletedReviewId
+    );
+    setReviews(updatedReviews);
+  };
+
+  const handleReviewEdit = (editedReviewId, editedReviewData) => {
+    const index = reviews.findIndex((review) => review._id === editedReviewId);
+    if (index !== -1) {
+      const updatedReviews = [...reviews];
+      updatedReviews[index] = { ...updatedReviews[index], ...editedReviewData };
+      setReviews(updatedReviews);
+    }
   };
 
   useEffect(() => {
@@ -204,15 +225,15 @@ const UniversityDetails = () => {
                 <div>
                   <h2 className="text-slate-600 text-base">Total Reviews</h2>
                   <p className="text-4xl text-slate-600 font-bold py-4">
-                    {university.reviews?.length}
+                    {reviews?.length}
                   </p>
                 </div>
                 <div>
                   <h2 className="text-slate-600 text-base">Average Rating</h2>
 
-                  {university.reviews?.length > 0 ? (
+                  {reviews?.length > 0 ? (
                     <p className="text-4xl text-slate-600 font-bold py-4">
-                      {calculateAverageRating(university?.reviews)} &#9733;
+                      {calculateAverageRating(reviews)} &#9733;
                     </p>
                   ) : (
                     <p className="text-4xl text-slate-600 font-bold py-4">
@@ -300,7 +321,11 @@ const UniversityDetails = () => {
                 <div>
                   {reviews.map((review, reviewIdx) => (
                     <div key={reviewIdx}>
-                      <Review review={review} />
+                      <Review
+                        review={review}
+                        onDelete={handleReviewDeletion}
+                        onEdit={handleReviewEdit}
+                      />
                     </div>
                   ))}
                 </div>
@@ -324,73 +349,80 @@ const UniversityDetails = () => {
               )}
 
               {isModalOpen && (
-                <Modal onClose={handleModalClose}>
-                  <h2 className="text-3xl text-slate-700 font-semibold my-4">
-                    Add Review
-                  </h2>
-                  <form action="">
-                    <div className="flex flex-col gap-2 my-6">
-                      <label
-                        htmlFor="rating"
-                        className="font-xl font-semibold text-slate-600"
+                <>
+                  <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>
+                  <Modal onClose={handleModalClose}>
+                    <h2 className="text-3xl text-slate-700 font-semibold my-4">
+                      Add Review
+                    </h2>
+                    <form action="">
+                      <div className="flex flex-col gap-2 my-6">
+                        <label
+                          htmlFor="rating"
+                          className="font-xl font-semibold text-slate-600"
+                        >
+                          Rating:
+                        </label>
+                        <input
+                          type="number"
+                          name="rating"
+                          min={1}
+                          max={5}
+                          value={inputs.rating}
+                          onChange={(evt) =>
+                            setInputs({ ...inputs, rating: evt.target.value })
+                          }
+                          placeholder="your rating towards university here"
+                          className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3 "
+                        />
+                        <p className="text-sm text-slate-500">
+                          Rating should be between 1 and 5
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-2 my-6">
+                        <label
+                          htmlFor="review"
+                          className="font-xl font-semibold text-slate-600"
+                        >
+                          Review:
+                        </label>
+                        <textarea
+                          rows={10}
+                          name="review"
+                          value={inputs.review}
+                          onChange={(evt) =>
+                            setInputs({ ...inputs, review: evt.target.value })
+                          }
+                          placeholder="your review here"
+                          className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3 "
+                        />
+                        <p className="text-sm text-slate-500">
+                          Review length should be atleast 50 characters long
+                        </p>
+                      </div>
+                    </form>
+                    <div className="flex justify-between items-center">
+                      <button
+                        className="boutline-none bg-green-600 text-slate-100 px-4 py-1 rounded-md tracking-wider hover:bg-green-500"
+                        onClick={handleAddReview}
                       >
-                        Rating:
-                      </label>
-                      <input
-                        type="number"
-                        name="rating"
-                        min={1}
-                        max={5}
-                        value={inputs.rating}
-                        onChange={(evt) =>
-                          setInputs({ ...inputs, rating: evt.target.value })
-                        }
-                        placeholder="your rating towards university here"
-                        className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3 "
-                      />
-                      <p className="text-sm text-slate-500">
-                        Rating should be between 1 and 5
-                      </p>
-                    </div>
-                    <div className="flex flex-col gap-2 my-6">
-                      <label
-                        htmlFor="review"
-                        className="font-xl font-semibold text-slate-600"
+                        Submit
+                      </button>
+                      <button
+                        className="outline-none bg-red-600 text-slate-100 px-4 py-1 rounded-md tracking-wider hover:bg-red-500"
+                        onClick={handleModalClose}
                       >
-                        Review:
-                      </label>
-                      <textarea
-                        rows={10}
-                        name="review"
-                        value={inputs.review}
-                        onChange={(evt) =>
-                          setInputs({ ...inputs, review: evt.target.value })
-                        }
-                        placeholder="your review here"
-                        className="text-grey-dark-1 border-2 p-2 rounded-md focus:border-2 focus:outline-none focus:border-grey-dark-3 "
-                      />
+                        Cancel
+                      </button>
                     </div>
-                  </form>
-                  <div className="flex justify-between items-center">
-                    <button
-                      className="boutline-none bg-green-600 text-slate-100 px-4 py-1 rounded-md tracking-wider hover:bg-green-500"
-                      onClick={handleAddReview}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="outline-none bg-red-600 text-slate-100 px-4 py-1 rounded-md tracking-wider hover:bg-red-500"
-                      onClick={handleModalClose}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </Modal>
+                  </Modal>
+                </>
               )}
             </div>
           )
         )}
       </div>
+      <Toaster />
     </AppLayout>
   );
 };

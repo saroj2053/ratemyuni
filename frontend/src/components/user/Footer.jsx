@@ -9,8 +9,8 @@ const Footer = () => {
             Rate My Uni
           </h1>
           <p className="text-slate-500 text-base">
-            Enabling transparency in the selection of universities as per the
-            reviews from the students
+            Unlocking Insights, Shaping Futures: Your Voice, Your University
+            Journey!
           </p>
         </div>
         <div>

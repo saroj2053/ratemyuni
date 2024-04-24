@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const useGetUniversities = () => {
   const [loading, setLoading] = useState(false);

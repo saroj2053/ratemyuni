@@ -3,6 +3,7 @@ import useGetUniversities from "../hooks/useGetUniversities";
 import University from "../components/user/University";
 import Loader from "../components/Loader";
 import AppLayout from "../components/user/AppLayout";
+import { Toaster } from "react-hot-toast";
 
 const Home = () => {
   const { loading, getUniversities } = useGetUniversities();
@@ -37,6 +38,7 @@ const Home = () => {
           )}
         </div>
       </AppLayout>
+      <Toaster />
     </div>
   );
 };

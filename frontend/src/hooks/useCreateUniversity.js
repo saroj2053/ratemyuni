@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const useCreateUniversity = () => {
   const [loading, setLoading] = useState(false);
@@ -21,16 +21,15 @@ const useCreateUniversity = () => {
       const logo = fileResponse.data.logo.filename;
 
       const universityData = { ...requestData, logo: logo };
-      console.log(universityData);
 
       const response = await fetch("/api/university/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(universityData),
       });
-      console.log(response);
+
       const data = await response.json();
-      console.log(data);
+
       if (data.success === false) {
         throw new Error(data.message);
       }

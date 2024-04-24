@@ -78,3 +78,42 @@ export const addReview = async (req, res) => {
     return response(res, 500, false, "Internal Server Error");
   }
 };
+
+export const deleteReview = async (req, res) => {
+  try {
+    const reviewId = req.params.id;
+
+    await Review.findByIdAndDelete(reviewId);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Review deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleteReview controller", error.message);
+    response(res, 500, false, "Internal server error");
+  }
+};
+
+export const updateReview = async (req, res) => {
+  try {
+    const reviewId = req.params.id;
+
+    const review = await Review.findByIdAndUpdate(
+      reviewId,
+      {
+        rating: req.body.rating,
+        review: req.body.review,
+      },
+      { new: true }
+    );
+
+    console.log(review);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Review updated successfully", review });
+  } catch (error) {
+    console.log("Error in deleteReview controller", error.message);
+    response(res, 500, false, "Internal server error");
+  }
+};
