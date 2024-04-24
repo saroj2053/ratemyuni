@@ -12,7 +12,7 @@ dotenv.config();
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
-console.log(__dirname);
+const dirName = path.resolve();
 
 const app = express();
 
@@ -22,16 +22,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // serving static files
+
 app.use(express.static(path.join(__dirname, "uploads")));
 app.use("/static", express.static(path.join(__dirname, "uploads")));
+app.use(express.static(path.join(dirName, "/frontend/dist")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/university", universityRoutes);
 app.use("/api/review", reviewRoutes);
 app.use("/api/upload-logo", uploadRoutes);
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello from rate my uni </h1>");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(dirName, "frontend", "dist", "index.html"));
 });
 
 const PORT = process.env.PORT || 8080;
