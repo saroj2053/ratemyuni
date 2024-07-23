@@ -66,16 +66,16 @@ const Review = ({ review, onDelete, onEdit }) => {
           {review.user === user?._id && (
             <div className="flex gap-10">
               <button
-                className="border-none outline-none bg-amber-600 text-slate-50 px-2 py-1 rounded-md flex gap-2 items-center"
+                className="border-none outline-none bg-amber-600 text-slate-50 px-2 py-1 w-10 h-10 rounded-full flex justify-center items-center"
                 onClick={handleEditModalOpen}
               >
-                <FaPencil /> Edit
+                <FaPencil />
               </button>
               <button
-                className="border-none outline-none bg-red-600 text-slate-50 px-2 rounded-md flex gap-2 items-center"
+                className="border-none outline-none bg-red-600 text-slate-50 px-2 py-1 w-10 h-10 rounded-full flex  justify-center items-center"
                 onClick={deleteReviewHandler}
               >
-                <FaTrash /> Delete
+                <FaTrash />
               </button>
             </div>
           )}

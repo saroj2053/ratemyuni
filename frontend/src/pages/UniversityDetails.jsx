@@ -415,6 +415,16 @@ const UniversityDetails = () => {
                         Cancel
                       </button>
                     </div>
+                    <p>
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Magnam quisquam accusantium quae possimus ea eveniet
+                      nesciunt nihil aliquid quas animi ipsum, fugiat ab rerum
+                      deserunt maiores tempore. Quia et, iste blanditiis unde
+                      tempore animi non itaque, ut sequi amet ab praesentium!
+                      Dolorem amet quidem sunt vel a hic, aut autem, aliquam id
+                      necessitatibus nulla nesciunt iure consectetur eum
+                      assumenda facilis!
+                    </p>
                   </Modal>
                 </>
               )}

@@ -10,7 +10,7 @@ import uploadRoutes from "./routes/fileUpload.route.js";
 import connectDB from "./db/db.js";
 dotenv.config();
 
-const __filename = url.fileURLToPath(import.meta.url);
+// const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const dirName = path.resolve();
 
@@ -22,7 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // serving static files
-
 app.use(express.static(path.join(__dirname, "uploads")));
 app.use("/static", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(dirName, "/frontend/dist")));
@@ -33,8 +32,12 @@ app.use("/api/review", reviewRoutes);
 app.use("/api/upload-logo", uploadRoutes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(dirName, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
+
+// app.get("/about", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "about.html"));
+// });
 
 const PORT = process.env.PORT || 8080;
 
