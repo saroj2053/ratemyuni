@@ -2,8 +2,7 @@ import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import markerIconPng from "leaflet/dist/images/gps.png";
-import markerShadowPng from "leaflet/dist/images/marker-shadow.png";
+import markerIconPng from "../assets/images/gps.png";
 
 const Map = ({ lat, lng, uniName, uniLoc }) => {
   const customIcon = new L.Icon({
