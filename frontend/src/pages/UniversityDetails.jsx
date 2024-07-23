@@ -12,6 +12,7 @@ import useGetUniversityDetails from "../hooks/useGetUniversityDetails";
 import Loader from "../components/Loader";
 
 import { Toaster } from "react-hot-toast";
+import Map from "../components/Map";
 
 const UniversityDetails = () => {
   const location = useLocation();
@@ -177,28 +178,12 @@ const UniversityDetails = () => {
                 <div className="w-[100%] xl:w-[50%] rounded-lg">
                   {!isLoading && isLocationDataValid ? (
                     <div className="rounded-xl">
-                      <MapContainer
-                        center={[locationData.latitude, locationData.longitude]}
-                        zoom={15}
-                        scrollWheelZoom={true}
-                        className="h-[400px] rounded-xl z-10"
-                        style={{ borderRadius: "10px" }}
-                      >
-                        <TileLayer
-                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <Marker
-                          position={[
-                            locationData.latitude,
-                            locationData.longitude,
-                          ]}
-                        >
-                          <Popup>
-                            {university.name} <br /> {university.location}.
-                          </Popup>
-                        </Marker>
-                      </MapContainer>
+                      <Map
+                        lat={locationData.latitude}
+                        lng={locationData.longitude}
+                        uniName={university.name}
+                        uniLoc={university.location}
+                      />
                     </div>
                   ) : (
                     <>
