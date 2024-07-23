@@ -2,17 +2,15 @@ import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import markerIconPng from "leaflet/dist/images/marker-icon.png";
+import markerIconPng from "leaflet/dist/images/gps.png";
 import markerShadowPng from "leaflet/dist/images/marker-shadow.png";
 
 const Map = ({ lat, lng, uniName, uniLoc }) => {
   const customIcon = new L.Icon({
     iconUrl: markerIconPng,
-    shadowUrl: markerShadowPng,
-    iconSize: [25, 41],
+    iconSize: [40, 40],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
-    shadowSize: [41, 41],
   });
   return (
     <div className="rounded-xl">

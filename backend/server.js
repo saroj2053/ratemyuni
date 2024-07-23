@@ -10,7 +10,7 @@ import uploadRoutes from "./routes/fileUpload.route.js";
 import connectDB from "./db/db.js";
 dotenv.config();
 
-// const __filename = url.fileURLToPath(import.meta.url);
+const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const dirName = path.resolve();
 
@@ -32,7 +32,7 @@ app.use("/api/review", reviewRoutes);
 app.use("/api/upload-logo", uploadRoutes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(dirName, "frontend", "dist", "index.html"));
 });
 
 // app.get("/about", (req, res) => {

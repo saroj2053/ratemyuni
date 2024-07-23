@@ -13,6 +13,9 @@ import Loader from "../components/Loader";
 
 import { Toaster } from "react-hot-toast";
 import Map from "../components/Map";
+import { MdCategory, MdDateRange } from "react-icons/md";
+import { FaLocationArrow } from "react-icons/fa6";
+import { FaLink } from "react-icons/fa";
 
 const UniversityDetails = () => {
   const location = useLocation();
@@ -134,41 +137,41 @@ const UniversityDetails = () => {
               <div className="flex justify-between flex-wrap items-center gap-6 py-4 w-full">
                 <div className="w-[100%] xl:w-[40%] flex flex-col gap-10 bg-slate-100 p-4 rounded-lg">
                   <div className="w-full flex justify-start items-center">
-                    <div className="text-lg text-slate-600 font-semibold my-4">
-                      Year of Establishment:
+                    <div className="text-base text-slate-600 font-semibold my-4">
+                      <MdDateRange size={25} />
                     </div>
-                    <h2 className=" text-slate-500 text-base px-8">
+                    <h2 className=" text-slate-500 text-base px-8 font-semibold">
                       {university.establishedYear}
                     </h2>
                   </div>
 
                   <div className="w-full flex justify-start items-center">
-                    <div className="text-lg text-slate-600 font-semibold my-4">
-                      Location:
+                    <div className="text-base text-slate-600 font-semibold my-4">
+                      <FaLocationArrow size={25} />
                     </div>
-                    <h2 className=" text-slate-500 text-base px-8">
+                    <h2 className=" text-slate-500 text-base px-8 font-semibold">
                       {university.location}
                     </h2>
                   </div>
 
                   <div className="w-full flex justify-start items-center">
-                    <div className="text-lg text-slate-600 font-semibold my-4">
-                      Category:
+                    <div className="text-base text-slate-600 font-semibold my-4">
+                      <MdCategory size={25} />
                     </div>
-                    <h2 className=" text-slate-500 text-base px-8">
+                    <h2 className=" text-slate-500 text-base px-8 font-semibold">
                       {university.category}
                     </h2>
                   </div>
 
                   <div className="w-full flex justify-start items-center">
-                    <div className="text-lg text-slate-600 font-semibold my-4">
-                      Website Url:
+                    <div className="text-base text-slate-600 font-semibold my-4">
+                      <FaLink size={25} />
                     </div>
                     <div>
                       <a
                         href={`http://${university.websiteUrl}`}
                         target="_blank"
-                        className=" text-blue-400 text-base px-8 underline hover:text-blue-600"
+                        className=" text-blue-400 text-base px-8 underline hover:text-blue-600 font-semibold"
                       >
                         {university.websiteUrl}
                       </a>
