@@ -125,7 +125,8 @@ const UniversityDetails = () => {
               <div>
                 <img
                   className="{university.name === 'Gandaki University' || university.name === 'Pokhara University' ?w-full : w-24} h-24"
-                  src={`http://localhost:8000/static/logos/${university.logo}`}
+                  // src={`http://localhost:8000/static/logos/${university.logo}`}
+                  src={`https://ratemyuni-3vzl.onrender.com/static/logos/${university.logo}`}
                   alt="uni logo"
                 />
               </div>
