@@ -12,7 +12,8 @@ const University = ({ university }) => {
     return string?.length > n ? string.substr(0, n - 1) + "..." : string;
   };
 
-  const logoUri = `http://localhost:8000/static/logos/${university.logo}`;
+  // const logoUri = `http://localhost:8000/static/logos/${university.logo}`;
+  const logoUri = `https://ratemyuni-3vzl.onrender.com/static/logos/${university.logo}`;
 
   const slugifiedUniversityName = slugify(university.name);
 
