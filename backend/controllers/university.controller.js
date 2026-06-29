@@ -61,6 +61,15 @@ export const getSingleUniversity = async (req, res) => {
         });
       }
 
+      if (!geocodeData.length) {
+        return res.status(200).json({
+          success: true,
+          message: "University details fetched successfully",
+          university,
+          geocode: null,
+        });
+      }
+
       const { lat, lon } = geocodeData[0];
 
       const geocode = { latitude: lat, longitude: lon };
