@@ -4,9 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "start": "node backend/server.js",
+    "build": "cd frontend && npm install && npm run build"
   },
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "author": "Saroj Sah",
   "license": "ISC",
   "dependencies": {

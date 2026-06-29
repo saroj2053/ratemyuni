@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import * as url from "url";
+import fs from "fs";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
@@ -30,9 +31,13 @@ app.use("/api/university", universityRoutes);
 app.use("/api/review", reviewRoutes);
 app.use("/api/upload-logo", uploadRoutes);
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello from rate my uni </h1>");
-});
+const frontendDist = path.join(__dirname, "..", "frontend", "dist");
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendDist, "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 8080;
 

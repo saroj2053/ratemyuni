@@ -16,14 +16,9 @@ const Review = ({ review, currentUser, onEdit, onDelete }) => {
           >
             {review.rating}
           </div>
-          <div>
-            <span className="text-sm font-medium text-gray-700">
-              {review.user?.fullName || "Anonymous"}
-            </span>
-            <span className="text-xs text-gray-400 ml-2">
-              {extractDate(review.createdAt)}
-            </span>
-          </div>
+          <span className="text-xs text-gray-400">
+            {extractDate(review.createdAt)}
+          </span>
         </div>
 
         {isOwner && (
