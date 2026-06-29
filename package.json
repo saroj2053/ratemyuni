@@ -6,8 +6,7 @@
   "scripts": {
     "server": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build": "cd frontend && npm run build",
-    "postinstall": "cd frontend && npm install"
+    "build": "npm install && cd frontend && npm install && npm run build"
   },
   "type": "module",
   "engines": {
