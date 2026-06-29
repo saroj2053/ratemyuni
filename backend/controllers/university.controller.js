@@ -23,9 +23,10 @@ export const getUniversities = async (req, res) => {
 
 export const getSingleUniversity = async (req, res) => {
   try {
-    const university = await University.findById(req.params.id).populate(
-      "reviews"
-    );
+    const university = await University.findById(req.params.id).populate({
+      path: "reviews",
+      populate: { path: "user", select: "fullName" },
+    });
 
     if (!university) {
       return response(res, 404, false, "University not found");
@@ -36,10 +37,29 @@ export const getSingleUniversity = async (req, res) => {
       const geocodeResponse = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           address
-        )}`
+        )}`,
+        { headers: { "User-Agent": "RateMyUni/1.0" } }
       );
 
+      if (!geocodeResponse.ok) {
+        return res.status(200).json({
+          success: true,
+          message: "University details fetched successfully",
+          university,
+          geocode: null,
+        });
+      }
+
       const geocodeData = await geocodeResponse.json();
+
+      if (!geocodeData.length) {
+        return res.status(200).json({
+          success: true,
+          message: "University details fetched successfully",
+          university,
+          geocode: null,
+        });
+      }
 
       const { lat, lon } = geocodeData[0];
 

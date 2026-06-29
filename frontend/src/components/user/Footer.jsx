@@ -2,24 +2,20 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="w-full font-grotesk border-2 border-t-grey-light-2 py-5">
-      <div className="max-w-[90%] mx-auto flex flex-col lg:flex-row lg:items-center justify-between items-start py-5 ">
-        <div className="lg:w-[33%]">
-          <h1 className="text-4xl font-semibold text-slate-700 my-2">
-            Rate My Uni
-          </h1>
-          <p className="text-slate-500 text-base">
+    <footer className="border-t border-gray-200 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="text-center md:text-left">
+          <h2 className="text-2xl font-bold text-gray-800">Rate My Uni</h2>
+          <p className="text-sm text-gray-500 mt-2 max-w-sm">
             Enabling transparency in the selection of universities as per the
             reviews from the students
           </p>
         </div>
-        <div>
-          <p className="text-center py-4 text-slate-500 text-sm">
-            Copyright &copy; All rights reserved
-          </p>
-        </div>
+        <p className="text-sm text-gray-400 shrink-0">
+          &copy; {new Date().getFullYear()} All rights reserved
+        </p>
       </div>
-    </div>
+    </footer>
   );
 };
 

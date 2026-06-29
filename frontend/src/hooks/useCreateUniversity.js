@@ -14,7 +14,7 @@ const useCreateUniversity = () => {
       });
 
       if (fileResponse.data.success === false) {
-        throw new Error(error.message);
+        throw new Error(fileResponse.data.message || "File upload failed");
       }
 
       console.log(fileResponse.data.logo);

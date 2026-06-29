@@ -17,8 +17,6 @@ const Home = () => {
   useEffect(() => {
     if (searchTerm.length === 0 && universities.length === 0) {
       fetchUniversities();
-    } else {
-      return;
     }
     async function fetchUniversities() {
       const universitiesData = await getUniversities();
@@ -27,27 +25,25 @@ const Home = () => {
   }, [searchTerm]);
 
   return (
-    <div>
-      <AppLayout onSearch={handleSearch}>
-        <div>
-          {loading ? (
-            <Loader title="Universities" />
-          ) : (
-            <div className="flex flex-wrap justify-between items-center max-w-[90%] mx-auto my-6">
-              {universities?.length === 0 ? (
-                <h1 className=" h-[calc(100vh-100px)] flex justify-center items-center text-3xl text-slate-500  font-medium">
-                  No universities found
-                </h1>
-              ) : (
-                universities.map((university, universityIdx) => (
-                  <University key={universityIdx} university={university} />
-                ))
-              )}
-            </div>
-          )}
+    <AppLayout onSearch={handleSearch}>
+      {loading ? (
+        <Loader title="Universities" />
+      ) : universities?.length === 0 ? (
+        <div className="min-h-[calc(100vh-100px)] flex items-center justify-center">
+          <h1 className="text-2xl text-gray-400 font-medium">
+            No universities found
+          </h1>
         </div>
-      </AppLayout>
-    </div>
+      ) : (
+        <div className="max-w-6xl mx-auto px-4 py-8 flex flex-wrap gap-6 items-stretch">
+          {universities.map((university) => (
+            <div key={university._id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex">
+              <University university={university} />
+            </div>
+          ))}
+        </div>
+      )}
+    </AppLayout>
   );
 };
 

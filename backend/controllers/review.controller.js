@@ -78,3 +78,61 @@ export const addReview = async (req, res) => {
     return response(res, 500, false, "Internal Server Error");
   }
 };
+
+export const updateReview = async (req, res) => {
+  try {
+    const { rating, review } = req.body;
+    const reviewId = req.params.id;
+
+    if (!rating || !review) {
+      return response(res, 400, false, "Rating and review are required");
+    }
+
+    if (rating < 1 || rating > 5) {
+      return response(res, 400, false, "Rating must be within 1 and 5");
+    }
+
+    const updatedReview = await Review.findByIdAndUpdate(
+      reviewId,
+      { rating, review },
+      { new: true }
+    );
+
+    if (!updatedReview) {
+      return response(res, 404, false, "Review not found");
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Review updated successfully",
+      review: updatedReview,
+    });
+  } catch (error) {
+    console.log("Error in updateReview controller", error.message);
+    return response(res, 500, false, "Internal Server Error");
+  }
+};
+
+export const deleteReview = async (req, res) => {
+  try {
+    const reviewId = req.params.id;
+
+    const review = await Review.findByIdAndDelete(reviewId);
+
+    if (!review) {
+      return response(res, 404, false, "Review not found");
+    }
+
+    await University.findByIdAndUpdate(review.university, {
+      $pull: { reviews: reviewId },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Review deleted successfully",
+    });
+  } catch (error) {
+    console.log("Error in deleteReview controller", error.message);
+    return response(res, 500, false, "Internal Server Error");
+  }
+};

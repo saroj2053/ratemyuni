@@ -1,31 +1,53 @@
 import React from "react";
 import { extractDate } from "../utils/extractDate";
 import { getRatingColor } from "../utils/ratingBgColor";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
-const Review = ({ review }) => {
+const Review = ({ review, currentUser, onEdit, onDelete }) => {
+  const isOwner =
+    currentUser && review.user && currentUser._id === review.user._id;
+
   return (
-    <>
-      <div className="flex flex-col">
-        <div className="flex gap-4 items-center">
+    <div className="pb-6 mb-6 border-b border-gray-100 last:border-b-0 last:mb-0 last:pb-0">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3 mb-3">
           <div
-            className={`${getRatingColor(
-              review.rating
-            )} w-14 h-14 rounded-full text-white font-semibold text-center flex justify-center items-center`}
+            className={`w-10 h-10 rounded-full text-white text-sm font-semibold flex items-center justify-center ${getRatingColor(review.rating)}`}
           >
-            {review.rating} &#9733;
+            {review.rating}
           </div>
-          <h2 className="text-md font-bold text-slate-600">
-            {extractDate(review.createdAt)}
-          </h2>
+          <div>
+            <span className="text-sm font-medium text-gray-700">
+              {review.user?.fullName || "Anonymous"}
+            </span>
+            <span className="text-xs text-gray-400 ml-2">
+              {extractDate(review.createdAt)}
+            </span>
+          </div>
         </div>
-        <div>
-          <p className="text-sm text-slate-600 text-semibold py-4">
-            {review.review}
-          </p>
-        </div>
+
+        {isOwner && (
+          <div className="flex gap-2 shrink-0">
+            <button
+              onClick={() => onEdit(review)}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+              title="Edit"
+            >
+              <FaEdit size={14} />
+            </button>
+            <button
+              onClick={() => onDelete(review._id)}
+              className="text-gray-400 hover:text-red-500 transition-colors"
+              title="Delete"
+            >
+              <FaTrash size={14} />
+            </button>
+          </div>
+        )}
       </div>
-      <div className="my-10 border-[1px] border-slate-100"></div>
-    </>
+
+      <p className="text-sm text-gray-700 leading-relaxed">{review.review}</p>
+    </div>
   );
 };
 

@@ -2,17 +2,23 @@ import React from "react";
 
 const Modal = ({ onClose, children }) => {
   return (
-    <div className="flex justify-center items-center w-[50%] mx-auto fixed top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] z-50 rounded-md shadow-md">
-      <div className="bg-slate-300 p-8 rounded shadow-sm w-full relative">
-        <span
-          className="text-slate-600 text-2xl font-semibold px-2 rounded-full cursor-pointer hover:text-black hover:bg-white absolute right-5"
-          onClick={onClose}
-        >
-          &times;
-        </span>
-        {children}
+    <>
+      <div
+        className="fixed inset-0 bg-black/40 z-40"
+        onClick={onClose}
+      />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto">
+          <button
+            onClick={onClose}
+            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+          >
+            &times;
+          </button>
+          {children}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

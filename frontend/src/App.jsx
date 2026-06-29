@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
 import Home from "./pages/Home.jsx";
 import AddUniversity from "./pages/AddUniversity.jsx";
 import Login from "./pages/Login.jsx";
@@ -13,7 +12,7 @@ import UniversityDetails from "./pages/UniversityDetails.jsx";
 function App() {
   const { user } = useUserContext();
   return (
-    <div>
+    <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -26,16 +25,12 @@ function App() {
             element={user ? <Navigate to="/" /> : <Signup />}
           />
           <Route path="/addUniversity" element={<AddUniversity />} />
-          <Route
-            path="/university/:name"
-            exact
-            element={<UniversityDetails />}
-          />
+          <Route path="/university/:name" element={<UniversityDetails />} />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer />
-    </div>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 }
 
